@@ -4,6 +4,7 @@
   "description": "charitable giving, simplified",
   "main": "index.js",
   "scripts": {
+    "postinstall": "./node_modules/bower/bin/bower install",
     "start": "node index.js",
     "test": "grunt"
   },
