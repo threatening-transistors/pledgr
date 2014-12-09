@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title> | ExplainJS by grunt-explainjs</title>
+  <link rel="stylesheet" type="text/css" href="css/unsemantic.css"/>
+  <link rel="stylesheet" type="text/css" href="css/explain.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata|Open+Sans:300italic,300,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1" />
+</head>
+
+<body>
+  <div class='page-menu'>
+    <div class='grid-container'>
+      <div class='grid-60 mobile-grid-100'>
+        <a class='logo' href='http://www.explainjs.com'>ExplainJS</a> by <a class='logo' href='https://github.com/collinforrester/grunt-explainjs'>grunt-explainjs</a>
+        
+      </div>
+    </div>
+  </div>
+  <div class='sections grid-container'>
+    <div class='code-bg hide-on-mobile'>
+    </div>
+    <br />
+    <br />
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>var User = require('./userModel');
+var Q = require('q');
+var jwt  = require('jwt-simple');
+var sendText = require('../sms/sendDonationText');
+
+module.exports = {
+  signin: function(req, res, next) {
+    var username = req.body.username;
+    var password = req.body.password;
+
+    var findUser = Q.nbind(User.findOne, User);
+
+    findUser({ username: username })
+      .then(function(user) {
+        if (!user) {
+          next(new Error('User does not exist'));
+        } else {
+          findUser({ password: password })
+          .then(function(password) {
+            if (!password) {
+              next(new Error('password incorrect'));
+            } else {
+              var token = jwt.encode(user, 'secret');
+              res.json({ token: token });
+            }
+          });</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>return user.comparePasswords(password)    .then(function(foundUser) {      if (foundUser) {        var token = jwt.encode(user, &#39;secret&#39;);        res.json({token: token});      } else {        return next(new Error(&#39;No user&#39;));      }    });</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>        }
+      })
+      .fail(function(error) {
+        next(error);
+      });
+  },
+
+  signup: function(req, res, next) {
+    var newUser = req.body;
+    var username = newUser.username;</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>parse phone number</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>    newUser.phone = newUser.phone.match(/\d/g).join('');
+
+    var findOne = Q.nbind(User.findOne, User);</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>check to see if user already exists</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>    findOne({ username: username })
+      .then(function(user) {
+        if (user) {
+          next(new Error('User already exist!'));
+        } else {
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>make a new user if not one</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>          var create = Q.nbind(User.create, User);
+          return create(newUser);
+        }
+      })
+      .then(function(user) {</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>send first text message after signup</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>        sendText.getUsers({ phone: user.phone });
+      })
+      .then(function() {
+        res.status(201).end();
+      })</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>.then(function(user) {    // create token to send back for auth    var token = jwt.encode(user, &#39;secret&#39;);    res.json({ token: token });  })</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>      .fail(function(error) {
+        next(error);
+      });
+  }
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>checkAuth: function (req, res, next) {    // checking to see if the user is authenticated    // grab the token in the header is any    // then decode the token, which we end up being the user object    // check to see if that user exists in the database    var token = req.headers[&#39;x-access-token&#39;];    if (!token) {      next(new Error(&#39;No token&#39;));    } else {      var user = jwt.decode(token, &#39;secret&#39;);      var findUser = Q.nbind(User.findOne, User);      findUser({username: user.username})        .then(function (foundUser) {          if (foundUser) {            res.send(200);          } else {            res.send(401);          }        })        .fail(function (error) {          next(error);        });    }  }</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>};
+.</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+  </div>
+</body>
+</html>

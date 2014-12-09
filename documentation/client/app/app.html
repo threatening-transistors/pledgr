@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title> | ExplainJS by grunt-explainjs</title>
+  <link rel="stylesheet" type="text/css" href="css/unsemantic.css"/>
+  <link rel="stylesheet" type="text/css" href="css/explain.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata|Open+Sans:300italic,300,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1" />
+</head>
+
+<body>
+  <div class='page-menu'>
+    <div class='grid-container'>
+      <div class='grid-60 mobile-grid-100'>
+        <a class='logo' href='http://www.explainjs.com'>ExplainJS</a> by <a class='logo' href='https://github.com/collinforrester/grunt-explainjs'>grunt-explainjs</a>
+        
+      </div>
+    </div>
+  </div>
+  <div class='sections grid-container'>
+    <div class='code-bg hide-on-mobile'>
+    </div>
+    <br />
+    <br />
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>angular.module('pledgr', [
+  'pledgr.charities',
+  'pledgr.factories',
+  'pledgr.home',
+  'pledgr.signup',
+  'pledgr.signin',
+  'ui.router'
+])
+.config(function($stateProvider, $urlRouterProvider) {</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>.config(function($stateProvider, $urlRouterProvider, $httpProvider) {</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>  $urlRouterProvider.otherwise('/');
+
+  $stateProvider
+    .state('home', {
+      url: '/',
+      templateUrl: 'app/home/home.html',
+      controller: 'HomeController'
+    })
+    .state('signin', {
+      url: '/signin',
+      templateUrl: 'app/signin/signin.html',
+      controller: 'SignInController'
+    })
+    .state('signup', {
+      url: '/signup',
+      templateUrl: 'app/signup/signup.html',
+      controller: 'SignupController'
+    })
+    .state('charities', {
+       url: '/charities/{c1:[0-9]+}/{c2:[0-9]+}/{c3:[0-9]+}',
+       templateUrl: 'app/charities/charities.html',
+       controller: 'CharitiesController'
+    });
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>$httpProvider.interceptors.push(&#39;AttachTokens&#39;);</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>});
+.</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+  </div>
+</body>
+</html>

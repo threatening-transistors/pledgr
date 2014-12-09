@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title> | ExplainJS by grunt-explainjs</title>
+  <link rel="stylesheet" type="text/css" href="css/unsemantic.css"/>
+  <link rel="stylesheet" type="text/css" href="css/explain.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata|Open+Sans:300italic,300,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1" />
+</head>
+
+<body>
+  <div class='page-menu'>
+    <div class='grid-container'>
+      <div class='grid-60 mobile-grid-100'>
+        <a class='logo' href='http://www.explainjs.com'>ExplainJS</a> by <a class='logo' href='https://github.com/collinforrester/grunt-explainjs'>grunt-explainjs</a>
+        
+      </div>
+    </div>
+  </div>
+  <div class='sections grid-container'>
+    <div class='code-bg hide-on-mobile'>
+    </div>
+    <br />
+    <br />
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>var morgan = require(&#39;morgan&#39;); // used for logging incoming request</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>var bodyParser = require('body-parser');
+var helpers = require('./helpers'); // our custom middleware
+
+module.exports = function(app, express) {
+
+  var userRouter = express.Router();
+  var charityRouter = express.Router();
+  var smsRouter = express.Router();
+  var scraperRouter = express.Router();
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>app.use(morgan(&#39;dev&#39;));</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
+  app.use(express.static(__dirname + '/../../client'));
+
+  app.use('/api/sms', smsRouter); // use sms router for all sms requests
+  app.use('/api/users', userRouter); // use user router for all user requests
+  app.use('/api/charity', charityRouter); // user charity router for charity requests
+  app.use('/scraper', scraperRouter);
+
+  app.use(helpers.errorLogger);
+  app.use(helpers.errorHandler);
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>inject our routers into their respective route files</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>  require('../users/userRoutes')(userRouter);
+  require('../sms/smsRoutes')(smsRouter);
+  require('../charity/charityRoutes')(charityRouter);
+  require('../scraper/scraperRoutes')(scraperRouter);
+};
+.</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+  </div>
+</body>
+</html>

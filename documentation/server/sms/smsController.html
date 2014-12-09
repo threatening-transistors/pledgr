@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title> | ExplainJS by grunt-explainjs</title>
+  <link rel="stylesheet" type="text/css" href="css/unsemantic.css"/>
+  <link rel="stylesheet" type="text/css" href="css/explain.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata|Open+Sans:300italic,300,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1" />
+</head>
+
+<body>
+  <div class='page-menu'>
+    <div class='grid-container'>
+      <div class='grid-60 mobile-grid-100'>
+        <a class='logo' href='http://www.explainjs.com'>ExplainJS</a> by <a class='logo' href='https://github.com/collinforrester/grunt-explainjs'>grunt-explainjs</a>
+        
+      </div>
+    </div>
+  </div>
+  <div class='sections grid-container'>
+    <div class='code-bg hide-on-mobile'>
+    </div>
+    <br />
+    <br />
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>require('dotenv').load();
+var AuthCodeModel = require('./authCodeModel');
+var SmsModel = require('./sentMessagesModel');
+var UserModel = require('../users/userModel');
+var CharityModel = require('../charity/charityModel');
+
+var client = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
+
+var fromPhone = process.env.TWILIO_NUMBER;
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Generate a random authentication code and save it in the db</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>var generateCode = function(userPhone) {
+  var code = Math.floor(Math.random() * 90000) + 10000;
+  var codeModel = new AuthCodeModel.AuthCode({ phone: userPhone, code: code });
+  codeModel.save(function(err) {
+    if (err) { throw err; }
+  });
+  return code;
+};
+
+var weekNumber = function(date) {
+  var dayOne = new Date(date.getFullYear(), 0, 1);
+  return Math.ceil(((date - dayOne) / 86400000) / 7);
+};
+
+module.exports = {</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Receive the user&#39;s choice and process the donation</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>  smsReceiver: function(req, res) {
+    if (req.method === 'POST') {</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Store the user&#39;s choice from the POST request sent by Twilio</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>      var userChoice = 'choice' + req.body.Body;
+      var userPhone = req.body.From.slice(2);</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Query the user choices collection with the phone number that sent the response</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>      SmsModel.SentMessages.findOne({ phone: userPhone }, function(err, data) {
+        if (err) {return console.error(err);}
+        if (data[userChoice]) {
+          var chosenCharityId = data[userChoice];</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Query the User collection to find out how much they want to donate</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>          UserModel.findOne({ phone: data.phone }, function(err, data) {
+            var today = new Date();</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Set the donation to the amount of the yearly pledge divided by the number of weeks remaining in the year</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>            var donationAmount = Math.round((data.pledge / (53 - weekNumber(today))) * 100) / 100;</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Create a new donation in the donations collection</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>            var donation = new SmsModel.Donations({
+              phone: data.phone,
+              charity: chosenCharityId,
+              amount: donationAmount
+            });</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Save the donation to the collection</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>            donation.save(function(err) {
+              if (err) { throw err; }
+              else {
+                chosenCharityId = parseInt(chosenCharityId);
+                CharityModel.findOne({ orgid: chosenCharityId }, function(err, data) {
+                  client.sendMessage({
+                    to: '+1' + userPhone,
+                    from: fromPhone,
+                    body: 'Thank you for your donation of $' + donationAmount + ' to ' + data.name + '.'
+                  }, function(err) {
+                    if (err) {
+                      console.log(err);
+                    }
+                  });
+                });
+              }
+            });
+            res.status(204).send();
+          });
+        } else {
+          res.status(500).send();
+        }
+      });
+    }
+  },</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Send an auth code to the user</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>  sendVerification: function(req, res) {
+    var userPhone = req.body.phone;
+    var code = generateCode(userPhone);
+
+    client.sendMessage({
+      to: '+1' + userPhone,
+      from: fromPhone,
+      body: 'Enter ' + code + ' on the signup page to verify your account.'
+    }, function(err) {
+      if (err) {
+        console.error(err);
+        res.status(500).send({ sent: false });
+      } else {
+        res.status(204).send({ sent: true });
+      }
+    });
+  },</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Check to see if the verification code exists in the DB</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>  verifyCode: function(req, res) {
+    var userPhone = req.body.phone;
+    var code = req.body.code;
+    AuthCodeModel.AuthCode.find({ phone: userPhone, code: code }, function(err, data) {
+      if (err) { return console.error(err); }
+      if (data.length === 0) {
+        res.status(201).send({ found: false });
+      } else {
+        res.status(201).send({ found: true });
+      }
+    });
+  }
+};
+.</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+  </div>
+</body>
+</html>

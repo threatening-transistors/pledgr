@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title> | ExplainJS by grunt-explainjs</title>
+  <link rel="stylesheet" type="text/css" href="css/unsemantic.css"/>
+  <link rel="stylesheet" type="text/css" href="css/explain.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata|Open+Sans:300italic,300,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1" />
+</head>
+
+<body>
+  <div class='page-menu'>
+    <div class='grid-container'>
+      <div class='grid-60 mobile-grid-100'>
+        <a class='logo' href='http://www.explainjs.com'>ExplainJS</a> by <a class='logo' href='https://github.com/collinforrester/grunt-explainjs'>grunt-explainjs</a>
+        
+      </div>
+    </div>
+  </div>
+  <div class='sections grid-container'>
+    <div class='code-bg hide-on-mobile'>
+    </div>
+    <br />
+    <br />
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>var client = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
+var _ = require('underscore');
+var SmsModel = require('./sentMessagesModel');
+var User = require('../users/userModel');
+var Charity = require('../charity/charityModel');
+
+var SentMessage = SmsModel.SentMessages;
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>For each item in the array, save the message to the db</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>var saveMessage = function(messages, next) {
+  next = next || function() {};
+
+  messages.forEach(function(message) {
+    var sentMessage = new SentMessage(message);
+    sentMessage.save(function(err) {
+      if (err) {
+        throw err;
+      }
+      next();
+    });
+  });
+};
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Text users with their message</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>var sendSms = function(messages, next) {
+  next = next || saveMessage;
+
+  messages.forEach(function(message) {
+    client.sendMessage(
+      {
+        to: '+1' + message.phone,
+        from: '+16508259600',
+        body: message.messageBody
+      },
+      function(err) {
+        if (err) {
+          console.log(err);
+        } else {
+          next(messages);
+        }
+      }
+    );
+  });
+};
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Generate indices for three random charities</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>var generateRandomIndices = function(min, max) {
+  var randoms = [];
+  while (randoms.length < 3) {
+    var index = Math.floor(Math.random() * (max - min + 1)) + min;
+    if (!_.contains(randoms, index)) {
+      randoms.push(index);
+    }
+  }
+  return randoms;
+};
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Trim charity name length if it&#39;s too long</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>var shortenString = function(string) {
+  if (string.length > 25) {
+    string = string.substring(0, 25);
+    string += '...';
+  }
+  return string;
+};
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Prepare a message for each user based on random indicies</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>var prepareMessageBody = function(users, charities, next) {
+  next = next || sendSms;
+  var messages = [];
+
+  for (var i = 0; i < users.length; i++) {
+    var randomIndices = generateRandomIndices(0, charities.length - 1);
+    var messageBody = 'Pledgr - decide who to help this week:\n';
+    var choice1 = charities[randomIndices[0]];
+    var choice2 = charities[randomIndices[1]];
+    var choice3 = charities[randomIndices[2]];
+    var link = 'http://pledgr.azurewebsites.net/charities/';
+    link += choice1.orgid + '/' + choice2.orgid + '/' + choice3.orgid;
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>jshint multistr: true</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>    messageBody += '1. ' + shortenString(choice1.name.toString()) + '\n';
+    messageBody += '2. ' + shortenString(choice2.name.toString()) + '\n';
+    messageBody += '3. ' + shortenString(choice3.name.toString()) + '\n';
+    messageBody += 'Reply with (1/3) to donate or visit ' + link;
+
+    var messageContent = {
+      phone: users[i].phone,
+      choice1: choice1.orgid,
+      choice2: choice2.orgid,
+      choice3: choice3.orgid,
+      messageBody: messageBody
+    };
+
+    messages.push(messageContent);
+    messageBody = '';
+  }
+
+  next(messages);
+};
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Get all charities from the DB</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>var getCharities = function(users, next) {
+  next = next || prepareMessageBody;
+
+  Charity.find(
+    {
+      name : {
+        $ne : null
+      }
+    }, function(err, data) {
+      if (err) {
+        console.log('Error fetching charities');
+      } else {
+        next(users, data);
+      }
+    }
+  );
+};
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>Select all users from the DB</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>var getUsers = function(queryData, next) {
+  next = next || getCharities;
+  queryData = queryData || {};
+
+  User.find(queryData, function(err, data) {
+    if (err) {
+      console.log('Error fetching users');
+    } else {
+      next(data);
+    }
+  });
+};
+
+module.exports = {
+  getUsers: getUsers,
+  getCharities: getCharities
+};
+.</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+  </div>
+</body>
+</html>
