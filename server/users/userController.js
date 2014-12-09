@@ -7,7 +7,7 @@ module.exports = {
   signin: function(req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
-
+    
     var findUser = Q.nbind(User.findOne, User);
 
     findUser({ username: username })
