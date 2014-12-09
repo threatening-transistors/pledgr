@@ -20,9 +20,32 @@ module.exports = function(grunt) {
       options: {
         config: 'config/.jscsrc'
       }
+    },
+   explainjs: {
+      dynamic_mappings: {
+          files : [
+          {
+            expand: true,
+            cwd: './',
+            src: jsFiles,
+            dest: 'documentation/',
+            ext: '.html',
+            extDot: 'first'
+          }
+          ]
+        },
+      dist: {
+        options: {
+          showFilename: true // default is false
+        }
+      }
     }
+
   });
   require('load-grunt-tasks')(grunt);
+  grunt.loadNpmTasks('grunt-explainjs');
+
+  grunt.registerTask('buildDocs', ['explainjs']); 
 
   grunt.registerTask('default', ['jshint', 'jscs']);
 };

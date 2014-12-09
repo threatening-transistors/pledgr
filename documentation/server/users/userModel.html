@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title> | ExplainJS by grunt-explainjs</title>
+  <link rel="stylesheet" type="text/css" href="css/unsemantic.css"/>
+  <link rel="stylesheet" type="text/css" href="css/explain.css"/>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata|Open+Sans:300italic,300,700' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1" />
+</head>
+
+<body>
+  <div class='page-menu'>
+    <div class='grid-container'>
+      <div class='grid-60 mobile-grid-100'>
+        <a class='logo' href='http://www.explainjs.com'>ExplainJS</a> by <a class='logo' href='https://github.com/collinforrester/grunt-explainjs'>grunt-explainjs</a>
+        
+      </div>
+    </div>
+  </div>
+  <div class='sections grid-container'>
+    <div class='code-bg hide-on-mobile'>
+    </div>
+    <br />
+    <br />
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>var mongoose = require('mongoose');</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>bcrypt   = require(&#39;bcrypt-nodejs&#39;),  var Q = require(&#39;q&#39;);  SALT<em>WORK</em>FACTOR  = 10;</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>var UserSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+
+  password: {
+    type: String,
+    required: true
+  },
+  first: String,
+  last: String,
+  male: Boolean,
+  female: Boolean,
+  animals: Boolean,
+  arts: Boolean,
+  education: Boolean,
+  evironment: Boolean,
+  health: Boolean,
+  humanService: Boolean,
+  international: Boolean,
+  publicBenefit: Boolean,
+  religion: Boolean,
+  local: Boolean,
+  phone: String,
+  code: String,
+  pledge: Number,
+  joinDate : {
+    type: Date,
+    default: Date.now
+  }
+});
+</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>UserSchema.methods.comparePasswords = function(candidatePassword) {    var defer = Q.defer();    var savedPassword = this.password;    bcrypt.compare(candidatePassword, savedPassword, function (err, isMatch) {      if (err) {        defer.reject(err);      } else {        defer.resolve(isMatch);      }    });    return defer.promise;  };</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre></pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>UserSchema.pre(&#39;save&#39;, function (next) {    var user = this;</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre></pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>// only hash the password if it has been modified (or is new)    if (!user.isModified(&#39;password&#39;)) {      return next();    }</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre></pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <p>// generate a salt    bcrypt.genSalt(SALT<em>WORK</em>FACTOR, function(err, salt) {      if (err) {        return next(err);      }</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre></pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <pre><code> // hash the password along with our new salt  bcrypt.hash(user.password, salt, function(err, hash) {    if (err) {      return next(err);    } </code></pre>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre></pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+      <div class='section'>
+        <div class='comment grid-40 mobile-grid-100 not-empty'>
+          <pre><code>   // override the cleartext password with the hashed one    user.password = hash;    user.salt = salt;    next();  }); </code></pre> <p>});  });</p>
+        </div>
+        <div class='code grid-60 mobile-grid-100 not-empty'>
+          <pre>module.exports = mongoose.model('User', UserSchema);
+.</pre>
+        </div>
+      </div>
+      <div class='clear'>
+      </div>
+    
+  </div>
+</body>
+</html>
