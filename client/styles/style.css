@@ -44,20 +44,39 @@ h2 {
   vertical-align: middle;
 }
 
-  .cta h1 {
-    margin-top: 0;
-    font-size: 5em;
-    text-align: center;
-    color: white;
-    text-shadow: black 0.1em 0.1em 0.2em;
-    letter-spacing: .02em;
-  }
-  .cta h4 {
-    font-size: 1.7em;
-    letter-spacing: .04em;
-    text-shadow: black 0.1em 0.1em 0.2em;
+.cta h1 {
+  margin-top: 0;
+  font-size: 5em;
+  text-align: center;
+  color: white;
+  text-shadow: black 0.1em 0.1em 0.2em;
+  letter-spacing: .02em;
+}
+.cta h4 {
+  font-size: 1.7em;
+  letter-spacing: .04em;
+  text-shadow: black 0.1em 0.1em 0.2em;
 
+}
+.cta a {
+  margin-top: 15px;
+}
+
+.categories {
+  list-style: none;
+  padding-left: 0;
+}
+
+  .categories li.all {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.1em;
   }
-  .cta a {
-    margin-top: 15px;
+
+  .categories input {
+    margin-right: 7px;
+  }
+
+  .validatePhone {
+    padding-top: 10px;
   }
