@@ -5,9 +5,9 @@ Charitable giving, simplified.
 
 ## Team
 
-  - __Product Owner__: [rustinpc](https://github.com/rustinpc)
-  - __Scrum Master__: [sgtonkin](https://github.com/sgtonkin)
-  - __Development Team Members__: [dduugg](github.com/dduugg), [mlom](https://github.com/mlom)
+  - __Product Owner__: [nballaney](https://github.com/NBallaney)
+  - __Scrum Master__: [renderf0x](https://github.com/renderf0x)
+  - __Development Team Members__: [raymondma1](https://github.com/raymondma1), [rachelsison](https://github.com/rachelsison),[dduugg](github.com/dduugg), [mlom](https://github.com/mlom), [rustinpc](https://github.com/rustinpc), [sgtonkin](https://github.com/sgtonkin)
 
 ## Table of Contents
 
