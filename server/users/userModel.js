@@ -14,6 +14,7 @@ var UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+
   first: String,
   last: String,
   male: Boolean,
@@ -35,6 +36,7 @@ var UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
+  
 });
 
 // UserSchema.methods.comparePasswords = function(candidatePassword) {
