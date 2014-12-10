@@ -22,8 +22,9 @@
   },
   "homepage": "https://github.com/warring-hail/greenfield",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.10.0",
-    "bower":"1.3.x",
+    "bower": "1.3.x",
     "cheerio": "^0.18.0",
     "dotenv": "^0.4.0",
     "express": "^4.10.4",
@@ -33,9 +34,9 @@
     "nodemon": "^1.2.1",
     "q": "^1.1.2",
     "request": "^2.49.0",
+    "stripe": "^3.0.2",
     "twilio": "~1.9.0",
-    "underscore": "~1.7.0",
-    "q": "^1.1.2"
+    "underscore": "~1.7.0"
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
