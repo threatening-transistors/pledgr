@@ -15,8 +15,9 @@ var CharityUserSchema = new mongoose.Schema({
 	website: String,
 	//images?
 	//stripe info
-	bank_account: String, //stripe
-	card: String, //stripe
+	recipient_id: String, //returned from createRecipient
+	bank_account: String, //stripe bank
+	card: String, //stripe - not currently used
 	transfers: Array
 
 });
@@ -26,7 +27,7 @@ var CharityUserSchema = new mongoose.Schema({
 CharityUserSchema.methods.createRecipient = function(name, bank_account, email, callback){
 	stripe.recipients.create({
 	  name: name,
-	  type: "corporation", //hardcoded as we're dealing with org donors
+	  type: "corporation", //hardcoded as we're dealing with org charities
 	  bank_account: bank_account,
 	  email: email
 	}, function(err, recipient) {
