@@ -34,6 +34,19 @@ Charitable giving, simplified.
 
 ## Development
 
+Organization Name
+Type of Charity
+create Email
+create Password
+optional organization representative
+optional describe organization
+couple images optional
+organization website
+
+Billing Info:
+*stripes
+*____ (if it's different)
+
 ### Installing Dependencies
 
 From within the root directory:
