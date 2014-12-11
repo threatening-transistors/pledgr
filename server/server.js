@@ -5,6 +5,9 @@ require('dotenv').load();
 
 var app = express();
 
+//set jwt-simple secret word
+app.set('jwtTokenSecret', 'DeRaNiRa');
+
 //connects mongoose to the 'pledgr' database;
 //the 'pledgr' db is created automatically at connection
 
