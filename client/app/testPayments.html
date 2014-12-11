@@ -10,7 +10,7 @@
       console.log(status,response);
     }
     $(document).ready(function(){
-      $('#form').submit(function(event){
+      $('#StripeForm').submit(function(event){
         event.preventDefault();
         console.log("hello")
         Stripe.bankAccount.createToken({
@@ -26,16 +26,30 @@
 </head>
 
 <body>
-  <form id='form' method='POST'>
-    <input type="text" class="name" placeholder="Name">
-    <select class="country" data-stripe="country">
+  
+  <div ng-show="showCharity">
+    <form id='DBCharityForm' method='POST'>
+      Name: <input type="text" ng-model="name" placeholder="Name"><br>
+      Type of Charity: <input type="text" ng-model="charityType" placeholder="Type of Charity"><br>
+      Email: <input type="text" ng-model="email" placeholder="email"><br>
+      Name of Charity Representative:* <input type="text" ng-model="rep" placeholder="Charity representative"><br>
+      Descripton of Charity: <input type="textarea" ng-model="charityDescription" placeholder="Charity Description"><br>
+      Official Charity Website:* <input type="text" ng-model="charityWebsite" placeholder="Charity Website"><br> 
+      <div ng-click="submit"> Next </div>
+      </form>
+  </div>
+    
+  <div ng-hide="showCharity">
+    <form id='StripeForm' method='POST'>
+    Country: <select class="country" data-stripe="country">
       <option value="US"> US </option>
       <option value="UK"> UK </option>
-    </select>
-    <input type="text" data-stripe="routing-number" class="routing-number" placeholder="Routing number">
-    <input type="text" data-stripe="account-number" class="account-number" placeholder="Account number">
-    <button type="submit"> Submit </button>
+    </select><br>
+    Routing Number: <input type="text" data-stripe="routing-number" class="routing-number" placeholder="Routing number"><br>
+    Account Number: <input type="text" data-stripe="account-number" class="account-number" placeholder="Account number"><br>
+    <button ng-click="submit"> Submit </button>
   </form>
+  </div>
 </body>
 
 </html>
