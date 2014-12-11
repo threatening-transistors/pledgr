@@ -2,7 +2,7 @@
 require('dotenv').load()
 //db and crypt modules
 var mongoose = require('mongoose');
-var bcrypt = require('bcrypt-nodjs');
+var bcrypt = require('bcrypt-nodejs');
 //initialize stripe node module, passing in our secret from env
 var stripe = require("stripe")(process.env.SECRET_KEY);
 

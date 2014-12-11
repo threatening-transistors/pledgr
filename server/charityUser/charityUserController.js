@@ -14,7 +14,7 @@ exports.signup = function(req, res, next) {
   findCharity({name:info.name})
     .then(function(charity) {
       if(charity) {
-        res.status(409).send('This charity organization already exists!'));
+        res.status(409).send('This charity organization already exists!');
       } else {
         var newCharity = new charityUserModel(info);
         // Creating recipient for Stripe
