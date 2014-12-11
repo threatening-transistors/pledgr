@@ -9,7 +9,7 @@ exports.signup = function(req, res, next) {
 
   var info = req.body;
   var findCharity = Q.nbind(charityUserModel.findOne, charityUserModel);
-
+  info.password = charityUserModel.generateHash(info.password);
 // Saving the charity if it doesn't exist
   findCharity({name:info.name})
     .then(function(charity) {
