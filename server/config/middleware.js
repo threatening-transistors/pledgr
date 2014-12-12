@@ -21,10 +21,14 @@ module.exports = function(app, express) {
   app.use('/api/users', userRouter); // use user router for all user requests
   app.use('/api/charity', charityRouter); // user charity router for charity requests
   app.use('/scraper', scraperRouter);
+
   //charity user routes
   app.use('/api/charityUser', charityUserRouter);
   //donations go here
   app.use('/api/donation', donationRouter);
+
+  // app.use('/api/charityUser', charityUserRouter);
+
   
   app.use(helpers.errorLogger);
   app.use(helpers.errorHandler);
@@ -34,6 +38,10 @@ module.exports = function(app, express) {
   require('../sms/smsRoutes')(smsRouter);
   require('../charity/charityRoutes')(charityRouter);
   require('../scraper/scraperRoutes')(scraperRouter);
+
   require('../charityUser/charityUserRoutes')(charityUserRouter);
   require('../donation/donationRoutes')(donationRouter);
+
+  //require('../charityUser/charityUserRoutes')(charityUserRouter);
+
 };

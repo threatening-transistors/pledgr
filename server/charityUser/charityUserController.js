@@ -6,6 +6,10 @@ var charityUserModel = require('./charityUserModel');
 
 // Storing information about the charity in the database
 exports.signup = function(req, res, next) {
+//TOMORROW: populate database with partially complete charityUser
+//use stripeResponseHandler to update charityUser entry with bank id, card id etc.
+  
+
 
   var info = req.body;
   var findCharity = Q.nbind(charityUserModel.findOne, charityUserModel);
@@ -42,6 +46,9 @@ exports.signup = function(req, res, next) {
     });
 }
 
+
 exports.profile = function(req,res) {
 
 }
+
+

@@ -15,6 +15,7 @@ var CharityUserSchema = new mongoose.Schema({
 	website: String,
 	//images?
 	//stripe info
+	//descrition of charity (or bio?)
 	recipient_id: String, //returned from createRecipient
 	bank_account: String, //stripe bank
 	card: String, //stripe - not currently used
@@ -48,3 +49,6 @@ CharityUserSchema.methods.validPassword = function(password) {
 };
 
 module.exports = mongoose.model('CharityUser', CharityUserSchema);
+
+
+
