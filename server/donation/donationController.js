@@ -62,8 +62,17 @@ module.exports = {
 
 		var testData = {
 			past12months: [13000,34000,24000,40000,60343,46783,57384,47585,67564,56485,69903,81007],
-			allTimeTotal: 34000000000
+			allTimeTotal: 34000000
 		}
+
+		res.status(300).json(testData);
+	},
+
+	globalStats: function(req, res){
+		var testData = {
+			past12months: [130000,340000,240000,400000,603430,467830,573840,475850,675640,564850,699030,810070],
+			allTimeTotal: 34000000000
+		};
 
 		res.status(300).json(testData);
 	}
