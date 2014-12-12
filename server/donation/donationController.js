@@ -74,16 +74,25 @@ module.exports = {
 			allTimeTotal: 34000000000
 		};
 
-		// // Load Chance
-		// var Chance = require('chance');
+		// Load Chance.js
+		var Chance = require('chance');
 
-		// // Instantiate Chance so it can be used
-		// var chance = new Chance();
+		// Instantiate Chance so it can be used
+		var chance = new Chance();
+		testData.zips = {};
+		var sum = 0;
 
-		// for(var i=0; i<2000; i++) {
-		// 	var randomAmount = Math.ceil(Math.random()*34000000);
-		// 	testData.zips[chance.zip()] = randomAmount;
-		// }
+		// Generating approx 2000 donations spread across random zips
+		while(sum < testData.allTimeTotal) {
+			var randomAmount = Math.ceil(Math.random()*34000000);
+			sum += randomAmount;
+			var zip = chance.zip();  // Generate random zip code
+			var zips = testData.zips; 
+
+			if(!zips[zip]) {zips[zip] = 0;}
+
+			zips[zip] += randomAmount;
+		}
 
 		res.status(200).json(testData);
 	}

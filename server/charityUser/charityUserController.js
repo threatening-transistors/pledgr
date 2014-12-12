@@ -10,7 +10,7 @@ exports.signup = function(req, res) {
 
   var info = req.body;
   // Saving the charity if it doesn't exist
-  findCharity({name:info.name})
+  findCharity({email: new RegExp('^'+info.email+'$', 'i')})
     .then(function(charity) {
       if(charity) {
         res.status(409).send('This charity organization already exists!');
@@ -38,7 +38,7 @@ exports.profile = function(req, res) {
 }
 
 exports.login = function(req, res) {
-  findCharity({name: req.body.name}, 'name password')
+  findCharity({email: req.body.email}, 'email password')
     .then(function(charity) {
       if(!charity) {
         res.redirect('/login');
