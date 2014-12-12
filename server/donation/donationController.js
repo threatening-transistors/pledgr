@@ -41,6 +41,7 @@ module.exports = {
 						donor_id: donor_id,
 						charity_id: charity_id,
 						amount: amount,
+						date: transfer.date,
 						status: transfer.status,
 						stripe_transfer_object: transfer
 					});
