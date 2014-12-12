@@ -9,7 +9,6 @@ var findMultiple = Q.nbind(charityUserModel.find, charityUserModel);
 exports.signup = function(req, res) {
 
   var info = req.body;
-  info.password = charityUserModel.generateHash(info.password);
   // Saving the charity if it doesn't exist
   findCharity({name:info.name})
     .then(function(charity) {
@@ -18,7 +17,9 @@ exports.signup = function(req, res) {
         return;
       }
       var newCharity = new charityUserModel(info);
+      newCharity.password = newCharity.generateHash(info.password);
       // Creating recipient for Stripe
+
       newCharity.createRecipient(info.name, info.bank_account, info.email, function (err, recipient) {
         // Storing charity into database with token id returned by Stripe
         newCharity.recipient_id = recipient.id;
@@ -26,7 +27,7 @@ exports.signup = function(req, res) {
           if(err) throw err;
           var token = helpers.createToken(charity._id, 'charity');
           // Respond success and send token to client
-          res.status(201).json({ token : token }).redirect('/profile');
+          res.status(201).json({ token : token });
         });
       });
     });
@@ -43,7 +44,7 @@ exports.login = function(req, res) {
         res.redirect('/login');
       } else if(charity.validatePassword(req.body.password)) {
         var token = helpers.createToken(charity._id, 'charity');
-        res.status(201).json({ token : token }).redirect('/profile');
+        res.status(201).json({ token : token });
       } else {
         res.redirect('/login');
       }
