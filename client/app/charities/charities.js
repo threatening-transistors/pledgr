@@ -36,7 +36,8 @@ angular.module('pledgr.charities', [])
       //var charityExpensesChartDiv = '<div id=' + data.orgid + '></div>';
       $('#highchart-container').highcharts({
         chart: {
-            type: 'line'
+            type: 'line',
+            zoomType:'x'
         },
         title: {
             text: 'Donations by Month'
