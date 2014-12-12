@@ -1,65 +1,64 @@
 angular.module('pledgr.signup', [])
 
-.controller('SignupController', function($scope, $window, Auth, SMS) {
-  $scope.user = {
-    first:'First',
-    last:'Last',
-    username: 'username@example.com',
-    password: '',
-    male: false,
-    female: false,
-    animals: false,
-    arts: false,
-    education: false,
-    environment: false,
-    health: false,
-    humanService: false,
-    international: false,
-    publicBenefit: false,
-    religion: false,
-    local: false,
-    phone: '(111)111-1111',
-    code:'test',
-    pledge: 100.00
-  };
+.controller('SignupController', function($scope){
+	$scope.showCharity = true;
+	console.log('before changed', $scope.showCharity);
 
-  $scope.signup = function() {
-    Auth.signup($scope.user)
-    // .then(function(token) {
-    //     $window.localStorage.setItem('token', token);
-    //     // $location.path('/userhome');
-    //   })
-      .catch(function(error) {
-        console.error(error);
-      });
-  };
+	// $scope.addCharity = function(){
+	// 	$scope.new CharityUser({
+	// 		name: $scope.name, //Org name
+	// 		type: $scope.charityType, //Category of charity
+	// 		email: $scope.email,
+	// 		password: $scope.password,// put hashed version of password
+	// 		representative: $scope.rep, //Optional, only useful in corp
+	// 		website: $scope.charityWebsite,
+	// 		//images?
+	// 		//stripe info
+	// 		recipient_id: null, //returned from createRecipient
+	// 		bank_account: null, //stripe bank
+	// 		card: null, //stripe - not currently used
+	// 		transfers: []
+	// 		});
+	// }
+    Stripe.setPublishableKey('pk_test_7qhH8GqrwSZvzFQVSWmiMiu1');
 
-  $scope.sendCode = function() {
-    var phone = $scope.user.phone.match(/\d/g).join('');
-    SMS.sendCode({
-      phone: phone
-    })
-    .then(function(sent) {
-      if (!sent) {
-        console.error('Error sending message. Please try again later.');
-      }
-    });
-  };
+    $scope.submit = function(){
+    	console.log('in submit');
+		Stripe.bankAccount.createToken({
+			country: $scope.country,		
+			routingNumber: $scope.routingNumber,
+			accountNumber: $scope.accountNumber
+		}, $scope.stripeResponseHandler);
+	}
 
-  $scope.verifyCode = function() {
-    var phone = $scope.user.phone.match(/\d/g).join('');
-    SMS.verifyCode({
-      phone: phone,
-      code: $scope.user.code
-    })
-    .then(function(found) {
-      if (found) {
-        console.log('Code found');
-      } else {
-        console.log('Code not found');
-        $('#verify').$invalid = true;
+	$scope.stripeResponseHandler = function(status, response){
+		//update database with id's
+		console.log('response: ', response);
+	}
 
-      }
-    });
-  };
+	$scope.next = function(){
+
+		$scope.showCharity = !$scope.showCharity;
+		console.log('showCharity', $scope.showCharity);
+		// var newCharity = new CharityUser({
+		// 	name: $scope.name, //Org name
+		// 	type: $scope.charityType, //Category of charity
+		// 	email: $scope.email,
+		// 	password: $scope.password,// put hashed version of password
+		// 	representative: $scope.rep, //Optional, only useful in corp
+		// 	website: $scope.charityWebsite,
+		// 	//images?
+		// 	//stripe info
+		// 	recipient_id: null, //returned from createRecipient
+		// 	bank_account: null, //stripe bank
+		// 	card: null, //stripe - not currently used
+		// 	transfers: []
+		// 	});
+		// newCharity.save(function(err){
+		// 	if(err){
+		// 		console.log(err);
+		// 	}
+			
+		// });
+	}
 });

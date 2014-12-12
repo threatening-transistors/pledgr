@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script>
+    Stripe.setPublishableKey('pk_test_7qhH8GqrwSZvzFQVSWmiMiu1');
+    function stripeResponseHandler(status,response) {
+      console.log(status,response);
+    }
+    $(document).ready(function(){
+      $('#StripeForm').submit(function(event){
+        event.preventDefault();
+        console.log("hello")
+        Stripe.bankAccount.createToken({
+          country: $('.country').val(),
+          routingNumber: $('.routing-number').val(),
+          accountNumber: $('.account-number').val()
+        },
+        stripeResponseHandler);
+      })
+    })
+
+  </script>
+</head>
+
+<body>
+  <div ng-controller="charityUserController">
+    <div ng-show="showCharity">
+      <form id='DBCharityForm' method='POST'>
+        Name: <input type="text" ng-model="name" placeholder="Name"><br>
+        Type of Charity: <input type="text" ng-model="charityType" placeholder="Type of Charity"><br>
+        Email: <input type="text" ng-model="email" placeholder="email"><br>
+        Password: <input type="text" ng-model="password" placeholder="password"><br>
+        Name of Charity Representative:* <input type="text" ng-model="rep" placeholder="Charity representative"><br>
+        Descripton of Charity: <input type="textarea" ng-model="charityDescription" placeholder="Charity Description"><br>
+        Official Charity Website:* <input type="text" ng-model="charityWebsite" placeholder="Charity Website"><br> 
+        <div ng-click="submit"> Next </div>
+        </form>
+    </div>
+  </div>
+    
+  <div ng-hide="showCharity">
+    <form id='StripeForm' method='POST'>
+    Country: <select class="country" data-stripe="country">
+      <option value="US"> US </option>
+      <option value="UK"> UK </option>
+    </select><br>
+    Routing Number: <input type="text" data-stripe="routing-number" class="routing-number" placeholder="Routing number"><br>
+    Account Number: <input type="text" data-stripe="account-number" class="account-number" placeholder="Account number"><br>
+    <button ng-click="submit"> Submit </button>
+  </form>
+  </div>
+</body>
+
+</html>
