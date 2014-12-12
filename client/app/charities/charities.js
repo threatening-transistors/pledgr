@@ -12,16 +12,16 @@ angular.module('pledgr.charities', [])
       $scope.globalStats = data.past12months;
     })
     .error(function(data,status) {
-      console.log('ERROR', status, data);
+      //console.log('ERROR', status, data);
       $scope.globalStats;
     })
   $scope.orgids.forEach(function(orgid) {
     $http.get('api/donation/charity/stats/86768')
       .success(function(data) {
-        $scope.makeChart();
+        $scope.makeChart(data);
       })
       .error(function(data, status) {
-        console.log('ERROR', status, data);
+        //console.log('ERROR', status, data);
         $scope.makeChart(data);
       });
   });
