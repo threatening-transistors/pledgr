@@ -2,6 +2,8 @@ angular.module('pledgr.charityList', [])
 
 .controller('CharityListController', function($scope, $http, $stateParams, CharityListFactory){
 
+	$scope.donationInProgress = false;
+
 	$scope.getCharityList = function(){
 		CharityListFactory.getCharityList().then(function(data){
 			console.log(data);
@@ -14,6 +16,12 @@ angular.module('pledgr.charityList', [])
 		$scope.paymentRecipient = $scope.charities[index].recipient_id;
 		$scope.paymentCharity = $scope.charities[index].name;
 		$('.pay-modal').modal();
+	};
+
+	$scope.processDonation = function(){
+		$('.donate-button').text("Donation in progress!").toggleClass('disabled');
+		$scope.donationInProgress = true;
+		
 	};
 
 	$scope.getCharityList();

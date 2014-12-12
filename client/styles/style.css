@@ -120,3 +120,8 @@ h2 {
   margin-right: 12%;
 }
 
+.charity-image {
+  max-height: 150px;
+  max-width: 170px;
+}
+
