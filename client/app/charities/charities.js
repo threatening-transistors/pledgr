@@ -18,7 +18,7 @@ angular.module('pledgr.charities', [])
   $scope.orgids.forEach(function(orgid) {
     $http.get('api/donation/charity/stats/86768')
       .success(function(data) {
-        $scope.makeChart(data);
+        $scope.makeChart();
       })
       .error(function(data, status) {
         console.log('ERROR', status, data);
