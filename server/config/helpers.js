@@ -35,6 +35,7 @@ module.exports = {
 
   checkToken: function(req, res, next) {
     var model;
+    var token = req.headers['x-access-token'];
     if(token) {
       var decoded = jwt.decode(token, app.get('jwtTokenSecret'));
       // Make user log-in again if token is expired
