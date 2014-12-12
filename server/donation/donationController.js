@@ -74,6 +74,17 @@ module.exports = {
 			allTimeTotal: 34000000000
 		};
 
+		// // Load Chance
+		// var Chance = require('chance');
+
+		// // Instantiate Chance so it can be used
+		// var chance = new Chance();
+
+		// for(var i=0; i<2000; i++) {
+		// 	var randomAmount = Math.ceil(Math.random()*34000000);
+		// 	testData.zips[chance.zip()] = randomAmount;
+		// }
+
 		res.status(200).json(testData);
 	}
 }

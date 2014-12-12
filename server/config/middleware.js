@@ -41,5 +41,7 @@ module.exports = function(app, express) {
 
   require('../charityUser/charityUserRoutes')(charityUserRouter);
   require('../donation/donationRoutes')(donationRouter);
-  require('../charityUser/charityUserRoutes')(charityUserRouter);
+  
+  //require('../charityUser/charityUserRoutes')(charityUserRouter);
+  
 };

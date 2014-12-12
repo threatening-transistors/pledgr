@@ -52,7 +52,7 @@ exports.login = function(req, res) {
 }
 
 exports.logout = function(req,res) {
-  res.json({ token: '0' }).redirect('/login');
+  res.json({ token: '0' });
 }
 
 exports.listAll = function(req, res){
