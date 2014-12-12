@@ -9,6 +9,13 @@ angular.module('pledgr.charityList', [])
 		});
 	};
 
+	$scope.directPay = function(index){
+		$scope.paymentBankAccount = $scope.charities[index].bank_account;
+		$scope.paymentRecipient = $scope.charities[index].recipient_id;
+		$scope.paymentCharity = $scope.charities[index].name;
+		$('.pay-modal').modal();
+	};
+
 	$scope.getCharityList();
 
 })
