@@ -50,6 +50,10 @@ exports.login = function(req, res) {
     });
 }
 
+exports.logout = function(req,res) {
+  res.json({ token: '0' }).redirect('/login');
+}
+
 exports.listAll = function(req, res){
 
   findMultiple({}).then(function(data){
@@ -62,3 +66,4 @@ exports.listAll = function(req, res){
   });
 
 }
+
