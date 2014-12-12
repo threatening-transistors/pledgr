@@ -45,7 +45,7 @@ angular.module('pledgr.charities', [])
             text: 'Donations by Month'
         },
         xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            categories: ['Nov', 'Dec', 'Jan', 'Feb', 'March', 'April', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct']
         },
         yAxis: {
             title: {
