@@ -55,7 +55,16 @@ module.exports = {
 				});
 			}
 		});
+	},
 
+	statsForCharity: function(req, res){
+		var charity_id = req.params.charityId;
 
+		var testData = {
+			past12months: [13000,34000,24000,40000,60343,46783,57384,47585,67564,56485,69903,81007],
+			allTimeTotal: 34000000000
+		}
+
+		res.status(300).json(testData);
 	}
 }
