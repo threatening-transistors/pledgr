@@ -1,20 +1,15 @@
 require('dotenv').load();
 var Q = require('q');
-var jwt  = require('jwt-simple');
-var moment = require('moment');
+var helpers = require('../config/helpers');
 var charityUserModel = require('./charityUserModel');
 
 // Storing information about the charity in the database
-exports.signup = function(req, res, next) {
-//TOMORROW: populate database with partially complete charityUser
-//use stripeResponseHandler to update charityUser entry with bank id, card id etc.
-  
-
+exports.signup = function(req, res) {
 
   var info = req.body;
   var findCharity = Q.nbind(charityUserModel.findOne, charityUserModel);
   info.password = charityUserModel.generateHash(info.password);
-// Saving the charity if it doesn't exist
+  // Saving the charity if it doesn't exist
   findCharity({name:info.name})
     .then(function(charity) {
       if(charity) {
@@ -27,28 +22,30 @@ exports.signup = function(req, res, next) {
           newCharity.recipient_id = recipient.id;
           newCharity.save(function(err, charity) {
             if(err) throw err;
-
-            //calculate token expiration
-            var expiry = moment().add('days', 7).valueOf();
-
-            //generate JWT token based on charity id
-            var token = jwt.encode({
-              iss: charity._id,
-              exp: expiry
-            }, app.get('jwtTokenSecret'));
-
-
-            //respond success and send token to client
-            res.status(201).json({ token : token });
+            var token = helpers.createToken(charity._id, 'charity');
+            // Respond success and send token to client
+            res.status(201).json({ token : token }).redirect('/profile');
           });
         });
       }
     });
 }
 
-
-exports.profile = function(req,res) {
+exports.profile = function(req, res) {
 
 }
 
-
+exports.login = function(req, res) {
+  var findCharity = Q.nbind(charityUserModel.findOne, charityUserModel);
+  findCharity({name: req.body.name}, 'name password')
+    .then(function(charity) {
+      if(!charity) {
+        res.redirect('/login');
+      }
+      if(charity.validatePassword(req.body.password)) {
+        var token = helpers.createToken(charity._id, 'charity');
+        res.status(201).json({ token : token}).redirect('/profile');
+      }
+      res.redirect('/login');
+    })
+}

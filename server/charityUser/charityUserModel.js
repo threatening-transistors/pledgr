@@ -44,7 +44,7 @@ CharityUserSchema.methods.generateHash = function(password) {
 
 //Checks password candidate against saved hash by using bcrypt compare
 
-CharityUserSchema.methods.validPassword = function(password) {
+CharityUserSchema.methods.validatePassword = function(password) {
 	return bcrypt.compareSync(password, this.password);
 };
 
