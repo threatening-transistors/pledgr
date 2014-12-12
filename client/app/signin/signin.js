@@ -1,13 +1,26 @@
 angular.module('pledgr.signin', [])
 
-.controller('SignInController', function($scope, $window, Auth) {
+.factory('charityLogin', function($http){
+  var service = {};
+
+  service.charitySignin =function(charitySignin){
+    $http.post('/api/charityuser/login', charitySignin)
+    .success(function(res){
+      console.log('response: ', res.data);
+    });
+  }
+
+  return service;
+})
+.controller('SignInController', function($scope, charityLogin, $window, Auth) {
   $scope.user = {
-    username: 'someone@example.com',
-    password: 'Password'
+    email: $scope.username,
+    password: $scope.password
   };
 
+
   $scope.signin = function() {
-    Auth.signin($scope.user)
+    charityLogin.charitySignin($scope.user)
       .then(function(token) {
         $window.localStorage.setItem('token', token);
         // $location.path('/userhome');
