@@ -2,12 +2,34 @@
   <div>
     <h1>{{charity.name}}</h1>
   </div>
-  <div class='col-md-4'>
-  	<h1 class="logo">kill</h1>
-	</div>
   <div class ="panel panel-default">
-  	<div class='col-md-6'>Data</div>
-  	<div class='col-md-6'>
+    <div class='col-md-4'>
+      <div class="panel-body"></div>
+      <div class = "panel panel-default">
+        <div class="panel-heading">Data</div>
+        <div class="panel-body">
+          <div class="list-group">
+  <div class="list-group-item disabled">
+    <h5 class="list-group-item-heading">Total Donated in Last 12 Months</h5>
+    <p class="list-group-item-text">{{globalStats.allTimeTotal | currency : $ : 0}}</p>
+  </div>
+  <div class="list-group-item disabled">
+    <h5 class="list-group-item-heading">Donations to Your Fondation in Last 12 Months</h5>
+    <p class="list-group-item-text">{{indStats.allTimeTotal | currency : $ : 0}}</p>
+  </div>
+  <div class="list-group-item disabled">
+    <h5 class="list-group-item-heading">Total Donated This Month</h5>
+    <p class="list-group-item-text">{{globalStats.past12months[globalStats.past12months.length-1] | currency : $ : 0}}</p>
+  </div>
+  <div class="list-group-item disabled">
+    <h5 class="list-group-item-heading">Total Donations to Your Fondation This Month</h5>
+    <p class="list-group-item-text">{{indStats.past12months[indStats.past12months.length-1] | currency : $ : 0}}</p>
+  </div>
+</div>
+        </div>
+      </div>
+    </div>
+  	<div class='col-md-8'>
   		<div class="panel-body"></div>
    		<div class ="panel panel-default">
   			<div class="panel-heading">Graphs</div>
