@@ -2,6 +2,7 @@
 var jwt  = require('jwt-simple');
 var moment = require('moment');
 var charityUserModel = require('../charityUser/charityUserModel')
+var app = require('../server');
 // var donorModel =
 
 module.exports = {
@@ -15,13 +16,13 @@ module.exports = {
   errorHandler: function(error, req, res, next) {
     // send error message to client
     // message for graceful error handling on app
-    res.send(500, { error: error.message });
+    res.status(500).send({error: error.message });
     next(error);
   },
 
   createToken: function(iss, model) {
     // Calculate token expiration
-    var expiry = moment().add('days', 7).valueOf();
+    var expiry = moment().add(7, 'days').valueOf();
 
     // Generate JWT token based on charity id
     var token = jwt.encode({

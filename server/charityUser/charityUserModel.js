@@ -32,6 +32,9 @@ CharityUserSchema.methods.createRecipient = function(name, bank_account, email, 
 	  bank_account: bank_account,
 	  email: email
 	}, function(err, recipient) {
+		if (err) {
+			console.log(err);
+		}
 	  callback(err, recipient);
 	});
 };
