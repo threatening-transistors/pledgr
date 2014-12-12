@@ -28,7 +28,7 @@ h2 {
   display:table;
   width: 100%;
   padding: 0;
-  background: url(../img/home-bg.jpg) no-repeat center center fixed; 
+  background: url(../img/home-bg2.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -39,6 +39,7 @@ h2 {
   text-align: center;
   float:none;
   margin:0 auto;
+  margin-top: 200px;
   color: white;
   display:table-cell;
   vertical-align: middle;
@@ -87,4 +88,10 @@ h2 {
   line-height: 30px;
 }
 
+.splash-container {
+}
+
+.full-page {
+    background-image: url(../img/symphony.png);
+}
 

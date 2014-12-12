@@ -15,7 +15,7 @@ var CharityUserSchema = new mongoose.Schema({
 	website: String,
 	//images?
 	//stripe info
-	//descrition of charity (or bio?)
+	description: String,
 	recipient_id: String, //returned from createRecipient
 	bank_account: String, //stripe bank
 	card: String, //stripe - not currently used
