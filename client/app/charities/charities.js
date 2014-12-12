@@ -9,7 +9,7 @@ angular.module('pledgr.charities', [])
   $http.get('api/donation/stats')
     .success(function(data){
       console.log(data);
-      $scope.globalStats = data.past12months;
+      $scope.globalStats = data;
     })
     .error(function(data,status) {
       //console.log('ERROR', status, data);
@@ -18,6 +18,8 @@ angular.module('pledgr.charities', [])
   $scope.orgids.forEach(function(orgid) {
     $http.get('api/donation/charity/stats/86768')
       .success(function(data) {
+        console.log(data);
+        $scope.indStats = data;
         $scope.makeChart(data);
       })
       .error(function(data, status) {
@@ -43,7 +45,7 @@ angular.module('pledgr.charities', [])
             text: 'Donations by Month'
         },
         xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            categories: ['Nov', 'Dec', 'Jan', 'Feb', 'March', 'April', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct']
         },
         yAxis: {
             title: {
@@ -63,7 +65,7 @@ angular.module('pledgr.charities', [])
             data: indStats
         }, {
             name: 'Global Statistics',
-            data: $scope.globalStats
+            data: $scope.globalStats.past12months
         }]
       });
 
