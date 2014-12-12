@@ -3,6 +3,7 @@ var Q = require('q');
 var helpers = require('../config/helpers');
 var charityUserModel = require('./charityUserModel');
 var findCharity = Q.nbind(charityUserModel.findOne, charityUserModel);
+var findMultiple = Q.nbind(charityUserModel.find, charityUserModel);
 
 // Storing information about the charity in the database
 exports.signup = function(req, res) {
@@ -47,4 +48,17 @@ exports.login = function(req, res) {
         res.redirect('/login');
       }
     });
+}
+
+exports.listAll = function(req, res){
+
+  findMultiple({}).then(function(data){
+    if (!data) {
+      res.status(404).send('None found');
+    } else {
+      res.status(200).json(data);
+    }
+
+  });
+
 }

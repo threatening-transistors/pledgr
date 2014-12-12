@@ -65,7 +65,7 @@ module.exports = {
 			allTimeTotal: 34000000
 		}
 
-		res.status(300).json(testData);
+		res.status(200).json(testData);
 	},
 
 	globalStats: function(req, res){
@@ -74,6 +74,6 @@ module.exports = {
 			allTimeTotal: 34000000000
 		};
 
-		res.status(300).json(testData);
+		res.status(200).json(testData);
 	}
 }
