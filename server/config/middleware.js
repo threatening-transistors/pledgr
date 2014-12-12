@@ -23,7 +23,7 @@ module.exports = function(app, express) {
   app.use('/scraper', scraperRouter);
 
   //charity user routes
-  //app.use('/api/charityUser', charityUserRouter);
+  app.use('/api/charityUser', charityUserRouter);
   //donations go here
   app.use('/api/donation', donationRouter);
 
