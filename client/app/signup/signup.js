@@ -35,6 +35,7 @@ angular.module('pledgr.signup', [])
 			email: $scope.email,
 			password: $scope.password,// put hashed version of password
 			representative: $scope.rep, //Optional, only useful in corp
+			description: $scope.charityDescription,
 			website: $scope.charityWebsite,
 			bank_account: response.id
 		})

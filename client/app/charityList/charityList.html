@@ -1,0 +1,34 @@
+<div class="container">
+	<div class="page-header"><h2>Charities on Pledgr</h2></div>
+	<div class="charitylist">
+		<div ng-repeat="charity in charities" class="media">
+			<a href="#" class="media-left">
+				<img src="img/client_test/red.png">
+			</a>
+			<div class="media-body">
+				<h4 class="media-heading">{{charity.name}}</h4>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt similique velit voluptas, distinctio libero reprehenderit, nemo tenetur repellat hic aliquam perspiciatis aliquid sit. Provident rem culpa qui, iusto corporis placeat.
+				<ul class="list-group">
+					<li class="list-group-item"><strong>Charity Website: </strong>{{charity.website}}</li>
+					<li class="list-group-item">Official Representative: {{charity.representative}}</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <div class="media">
+  <a class="media-left" href="#">
+    <img src="..." alt="...">
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading">Media heading</h4>
+    ...
+  </div>
+</div> -->
+
+
+
+<!-- <ul>
+	<li ng-repeat="charity in charities">{{charity.name}}</li>
+</ul> -->
