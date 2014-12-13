@@ -37,7 +37,8 @@ angular.module('pledgr.signup', [])
 			representative: $scope.rep, //Optional, only useful in corp
 			description: $scope.charityDescription,
 			website: $scope.charityWebsite,
-			bank_account: response.id
+			bank_account: response.id,
+			img: $scope.img
 		})
 	}
 
