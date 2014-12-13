@@ -1,13 +1,13 @@
 <div class="container">
 	<div class="page-header"><h2>Charity Partners on Pledgr</h2></div>
 	<div class="charitylist">
-		<div ng-repeat="charity in charities" class="media row">
+		<div ng-repeat="charity in charities" class="media row charity-row">
 			<a href="#" class="media-left col-md-2">			
 					<img class="charity-image" ng-if="charity.image" src="img/client_test/{{charity.image}}">
 					<img class="charity-image" ng-if="!charity.image" src="img/client_test/red.png">
 			</a>
 			<div class="media-body col-md-8">
-				<h4 class="media-heading">{{charity.name}}</h4>
+				<h3 class="media-heading">{{charity.name}}</h3>
 				{{charity.description}}
 				<ul class="list-group">
 					<li class="list-group-item"><strong>Charity Website: </strong>{{charity.website}}</li>
@@ -30,7 +30,7 @@
 	      </div>
 	      <div class="modal-body">
 
-			<form role="form">
+			<form id="cc-form" role="form">
 				<div class="form-group">
 					<label for="card-number">Card Number</label>
 			      	<input id="card-number" class="form-control" type="text" size="20" data-stripe="number" />
