@@ -38,6 +38,7 @@ angular.module('pledgr.signup', [])
 			description: $scope.charityDescription,
 			website: $scope.charityWebsite,
 			bank_account: response.id
+			// img: $scope.img
 		})
 	}
 

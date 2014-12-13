@@ -41,7 +41,7 @@ module.exports = {
       var decoded = jwt.decode(token, app.get('jwtTokenSecret'));
       // Make user log-in again if token is expired
       if(decoded.exp <= Date.now()) {
-        res.redirect('/login');
+        res.json({ token : 'undefined' });
         return;
       }
       // Check if token belongs to charity or donor
@@ -53,7 +53,7 @@ module.exports = {
       // Attaching user to request
       model.findById(decoded.iss, function(err, user) {
         if(err) {
-          res.redirect('/login');
+          res.json({ token : 'undefined' });
           return;
         }
         req.body.user = user;
