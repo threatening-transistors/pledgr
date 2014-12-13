@@ -42,7 +42,11 @@
    		<div class ="panel panel-default">
   			<div class="panel-heading"><h4>Graphs</h4></div>
   			<div class="panel-body">
-  				<div id="highchart-container"></div>
+          <button type="button" class="btn btn-default" ng-click = "switchLine()">Line Graph</button>
+          <button type="button" class="btn btn-default" ng-click = "switchGraph()">Geo Graph</button>
+          <br></br>
+  				<div id="highchart-container" ng-show ="showChart === 'line'"></div>
+          <div id="graphchart-container" ng-show="showChart === 'geo'"></div>
   			</div>
 			</div>
   	</div>
