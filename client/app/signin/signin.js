@@ -4,7 +4,7 @@ angular.module('pledgr.signin', [])
   var service = {};
 
   service.charitySignin =function(charitySignin){
-    return $http.post('/api/charityuser/login', charitySignin)
+    return $http.post('/api/charityuser/signin', charitySignin)
     .then(function(token){
       console.log('token: ', token.data);
       $window.localStorage.setItem('token', token.data.token);

@@ -20,7 +20,7 @@ var CharityUserSchema = new mongoose.Schema({
 	bank_account: String, //stripe bank
 	card: String, //stripe - not currently used
 	transfers: Array,
-	img: { mime: String, bin: Buffer }
+	// img: { mime: String, bin: Buffer }
 });
 
 // Uses Stripe's API to generate a recipient on our account to receive payments. Use callback param to grab the recipient returned from the Stripe call.
