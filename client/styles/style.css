@@ -6,6 +6,7 @@ html {
 body {
   height: 100%;
   width: 100%;
+  background-image: url(../img/symphony.png);
 }
 
 h1.logo {
@@ -88,10 +89,34 @@ h2 {
   line-height: 30px;
 }
 
+.signinform {
+  margin-left: 30%;
+  margin-right: 30%;
+  line-height: 30px;
+}
+
 .splash-container {
 }
 
-.full-page {
-    background-image: url(../img/symphony.png);
+
+
+.center-block {
+  display: block;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+.element {
+  .center-block();
+}
+
+.center-text {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.error {
+  color: red;
+  margin-left: 12%;
+  margin-right: 12%;
 }
 
