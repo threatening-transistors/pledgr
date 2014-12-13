@@ -11,11 +11,13 @@ var stripe = require("stripe")(process.env.SECRET_KEY);
 var Q = require('q');
 
 //promisify function for Charity Search
-var findCharityUser = Q.nbind(charityUser.findOne, charityUser);
+var findCharityUser = Q.nbind(charityUser.findById, charityUser);
 
 
 module.exports = {
 	transferToCharity: function(req, res){
+
+		console.log("xfer route");
 
 		var donor_id = req.body.donor_id;
 		var charity_id = req.body.charity_id;
@@ -24,11 +26,13 @@ module.exports = {
 
 		//TODO - find donorID when implemented
 		
-		findCharityUser({ '_id': charity_id }).then(function(charity){
+		findCharityUser(charity_id).then(function(charity){
 			if (!charity){
 				//error
+				console.log("no charity found - server");
 				res.status(404).json({error:'no charity found'});
 			} else {
+				console.log('hitting stripe route');
 				stripe.transfers.create({
 					amount: amount,
 					currency: "usd", //hardcoded for now
@@ -41,19 +45,21 @@ module.exports = {
 						donor_id: donor_id,
 						charity_id: charity_id,
 						amount: amount,
-						date: transfer.date,
-						status: transfer.status,
+						// date: transfer.date,
+						// status: transfer.status,
 						stripe_transfer_object: transfer
 					});
 
 					record.save(function(err,data){
 						if (err)
 							res.send(err);
-						res.status(201).json({status: transfer.status})
+						res.status(201).json({status: "saved"})
 					});
 
 				});
 			}
+		}).catch(function(err){
+			console.log(err);
 		});
 	},
 
