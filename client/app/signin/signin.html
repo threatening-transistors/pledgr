@@ -5,19 +5,21 @@
   <form role="form" id='signinForm' method='POST'>
     <div class="form-group">
       <label for="email">Username</label>
-        <input type="text" class="form-control" ng-model="username" id="username" placeholder="charity@example.com">
+        <input type="email" class="form-control" ng-model="username" id="username" placeholder="charity@example.com">
     </div>
     <div class="form-group">
       <label for="loginpass">Password</label>
-        <input type="password" class="form-control" ng-model="loginpass" id="loginpass" placeholder="password">
+        <input type="password" class="form-control" ng-model="password" id="loginpass" placeholder="password">
     </div>
     <div>
       <button class="btn btn-primary btn-lg active col-md-3 col-md-offset-4" type="button" ng-click="signin()"> Sign In </button>
     </div>
     <br>
     <br>
-      <p ng-show="signinForm.username.$invalid">Please enter your email address in the format someone@example.com.</p>
-      <p ng-show="signinForm.username.$invalid">Please enter your password.</p>
+    <div ng-show="invalid">
+      <p class="error"><strong>Incorrect username or password, please try again<strong></p>
+      </div>
+
   </form>
   <div class="center-text">
     <a ui-sref="signup">Don't have an account? <strong>Signup Today!</strong></a>

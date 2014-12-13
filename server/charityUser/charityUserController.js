@@ -38,15 +38,17 @@ exports.profile = function(req, res) {
 }
 
 exports.login = function(req, res) {
+  console.log('in login: charityUserController');
   findCharity({email: req.body.email}, 'email password')
     .then(function(charity) {
       if(!charity) {
-        res.redirect('/login');
+        res.status(200).json({ token : 'undefined'});
       } else if(charity.validatePassword(req.body.password)) {
         var token = helpers.createToken(charity._id, 'charity');
         res.status(201).json({ token : token });
+        
       } else {
-        res.redirect('/login');
+        res.status(200).json({ token : 'undefined'});
       }
     });
 }
