@@ -23,6 +23,7 @@ angular.module('pledgr.charityList', [])
 		var $form = $('#cc-form');
 		$('.donate-button').text("Donation in progress!").toggleClass('disabled');
 		$scope.donationInProgress = true;
+		$scope.startProgressBar();
 
 		$scope.stripeInit();
 		
@@ -39,6 +40,27 @@ angular.module('pledgr.charityList', [])
 	    	});
 	    });
 ;
+
+	};
+
+	$scope.startProgressBar = function(){
+			
+		var $bar = $('#xfer-progress');
+		var currentVal = $bar.width();
+		console.log('currentVal', currentVal);
+		
+		$scope.interval = setInterval(function(){
+
+			currentVal = $bar.width();
+			$bar.width(currentVal + 100);
+			$bar.attr('aria-valuenow', currentVal + 100);
+
+
+		}, 500);
+
+	};
+
+	$scope.stopProgressBar = function(){
 
 	};
 
